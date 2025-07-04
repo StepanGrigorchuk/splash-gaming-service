@@ -133,15 +133,28 @@
     color: var(--text-primary);
 }
 
+.controls-labels {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.controls-labels span {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Специальная сетка для самолётов с 4 кнопками */
+.controls-grid:has(.control-key:nth-child(4)) {
+    grid-template-columns: repeat(4, 1fr);
+}
+
 .action-buttons {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-}
-
-.action-buttons .secondary-button {
-    flex: 1;
-    min-width: 120px;
 }
 
 /* Специальные стили для Тетриса */

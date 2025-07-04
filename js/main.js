@@ -37,6 +37,15 @@ class SplashApp {
                 difficulty: 'Средне',
                 duration: '5-10 мин',
                 file: 'memory.html'
+            },
+            {
+                id: 'planes',
+                title: 'Самолёты',
+                description: 'Летайте на самолёте и уничтожайте вражеские цели.',
+                icon: '✈️',
+                difficulty: 'Средне',
+                duration: '10-15 мин',
+                file: 'planes.html'
             }
         ];
         

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Самолёты - SPLASH</title>
+    
+    <!-- Фавиконка -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="../assets/icons/favicon-32x32.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/favicon.svg">
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="../assets/icons/favicon-32x32.svg" alt="SPLASH" class="logo-icon">
+                    <a href="../index.html" class="logo">SPLASH</a>
+                </div>
+                <nav class="nav">
+                    <a href="../index.html" class="nav-link">Главная</a>
+                    <span class="nav-link active">Самолёты</span>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="game-container">
+            <div class="game-header">
+                <h1 class="game-title">✈️ Самолёты</h1>
+                <div class="game-stats">
+                    <div class="stat">
+                        <span class="stat-label">Очки:</span>
+                        <span class="stat-value" id="score">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Жизни:</span>
+                        <span class="stat-value" id="lives">3</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Рекорд:</span>
+                        <span class="stat-value" id="bestScore">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-area">
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+                <div class="game-overlay" id="gameOverlay">
+                    <div class="game-message">
+                        <h2 id="gameMessage">Готовы к полёту?</h2>
+                        <p id="gameSubmessage">Используйте стрелки для управления и пробел для стрельбы</p>
+                        <button class="cta-button" id="startButton">Начать игру</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <div class="controls-section">
+                    <h3>Управление</h3>
+                    <div class="controls-grid">
+                        <div class="control-key">←</div>
+                        <div class="control-key">→</div>
+                        <div class="control-key">Пробел</div>
+                        <div class="control-key">P</div>
+                    </div>
+                    <div class="controls-labels">
+                        <span>Влево</span>
+                        <span>Вправо</span>
+                        <span>Стрельба</span>
+                        <span>Пауза</span>
+                    </div>
+                </div>
+                <div class="controls-section">
+                    <h3>Действия</h3>
+                    <div class="action-buttons">
+                        <button class="secondary-button" id="pauseButton">
+                            <i class="fas fa-pause"></i> Пауза
+                        </button>
+                        <button class="secondary-button" id="restartButton">
+                            <i class="fas fa-redo"></i> Заново
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/planes.js"></script>
+</body>
+</html>
