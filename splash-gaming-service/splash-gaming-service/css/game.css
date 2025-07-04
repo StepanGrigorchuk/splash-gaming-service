@@ -1,0 +1,556 @@
+/* Стили для игр */
+.game-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.game-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.game-stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1rem;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.game-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+#gameCanvas {
+    border: 3px solid var(--border);
+    border-radius: var(--border-radius);
+    background: var(--surface);
+    box-shadow: var(--shadow-lg);
+}
+
+.game-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.game-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.game-message {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.game-message h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.game-message p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.game-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.controls-section h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.control-key {
+    background: var(--background);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.action-buttons .secondary-button {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* Специальные стили для Тетриса */
+.tetris-layout {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.game-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 200px;
+}
+
+.next-piece {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.next-piece h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+#nextCanvas {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    background: var(--background);
+}
+
+.tetris-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tetris-controls .control-key {
+    background: var(--background);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 0.5rem;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+/* Змейка */
+.snake-segment {
+    fill: var(--primary-color);
+}
+
+.snake-head {
+    fill: var(--secondary-color);
+}
+
+.snake-food {
+    fill: var(--accent-color);
+}
+
+/* Тетрис */
+.tetris-block {
+    stroke: var(--border);
+    stroke-width: 1;
+}
+
+.tetris-block.filled {
+    fill: var(--primary-color);
+}
+
+.tetris-block.preview {
+    fill: var(--text-muted);
+    opacity: 0.3;
+}
+
+/* Пятнашки */
+.puzzle-tile {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.puzzle-tile:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(0.95);
+}
+
+.puzzle-tile.empty {
+    background: transparent;
+    border: 2px dashed var(--border);
+    cursor: default;
+}
+
+/* Память */
+.memory-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    aspect-ratio: 1;
+}
+
+.memory-card:hover {
+    transform: scale(0.95);
+}
+
+.memory-card.flipped {
+    background: var(--primary-color);
+    color: white;
+}
+
+.memory-card.matched {
+    background: var(--accent-color);
+    color: white;
+    cursor: default;
+}
+
+/* Специальные стили для Пятнашек */
+.puzzle-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 320px;
+    height: 320px;
+    background: var(--surface);
+    padding: 8px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+}
+
+.puzzle-tile {
+    background: var(--background);
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.puzzle-tile:hover:not(.empty) {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(0.95);
+}
+
+.puzzle-tile.empty {
+    background: transparent;
+    border: 2px dashed var(--border);
+    cursor: default;
+}
+
+.puzzle-tile.highlight {
+    background: var(--accent-color);
+    color: white;
+    animation: pulse 1s infinite;
+}
+
+.puzzle-instructions {
+    background: var(--background);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.puzzle-instructions p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Специальные стили для игры на память */
+.memory-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.memory-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    aspect-ratio: 1;
+    user-select: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.memory-card:hover:not(.flipped):not(.matched) {
+    transform: scale(0.95);
+    border-color: var(--primary-color);
+}
+
+.memory-card.flipped {
+    background: var(--primary-color);
+    color: white;
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    background: var(--accent-color);
+    color: white;
+    cursor: default;
+    animation: matchFound 0.6s ease-out;
+}
+
+.memory-card.wrong {
+    background: #ff6b6b;
+    color: white;
+    animation: wrongMatch 0.6s ease-out;
+}
+
+.memory-card::before {
+    content: '?';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    transition: var(--transition);
+    backface-visibility: hidden;
+}
+
+.memory-card.flipped::before,
+.memory-card.matched::before {
+    transform: rotateY(180deg);
+    opacity: 0;
+}
+
+.memory-instructions {
+    background: var(--background);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.memory-instructions p {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+@keyframes matchFound {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@keyframes wrongMatch {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Адаптивность для игр */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 0 10px;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        height: auto;
+        max-width: 350px;
+    }
+    
+    .game-stats {
+        gap: 1rem;
+    }
+    
+    .game-controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .action-buttons {
+        justify-content: center;
+    }
+    
+    .controls-grid {
+        justify-content: center;
+    }
+}
+
+/* Адаптивность для Тетриса */
+@media (max-width: 768px) {
+    .tetris-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-sidebar {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .next-piece {
+        order: -1;
+    }
+    
+    #gameCanvas {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
+    }
+}
+
+/* Адаптивность для игры на память */
+@media (max-width: 768px) {
+    .memory-board {
+        max-width: 300px;
+        gap: 8px;
+    }
+    
+    .memory-card {
+        font-size: 1.5rem;
+    }
+    
+    .memory-card::before {
+        font-size: 1.2rem;
+    }
+}
+
+/* Анимации для игр */
+@keyframes scoreIncrease {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.score-animation {
+    animation: scoreIncrease 0.3s ease-out;
+}
+
+@keyframes gameOver {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-5deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+    75% { transform: scale(1.1) rotate(-5deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+.game-over-animation {
+    animation: gameOver 0.5s ease-out;
+}
+
+/* Эффекты частиц */
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: particleFloat 1s ease-out forwards;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(var(--random-x, 0), var(--random-y, -50px)) scale(0);
+    }
+}
