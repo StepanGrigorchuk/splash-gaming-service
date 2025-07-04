@@ -65,10 +65,15 @@ class SnakeGame {
         this.score = 0;
         this.gameRunning = true;
         this.paused = false;
+        this.gameStarted = false; // Игра не начинается пока игрок не нажмет стрелку
         this.gameStartTime = Date.now();
+        
+        // Инициализируем цвета перед первым рисованием
+        this.setupTheme();
         
         this.updateScore();
         this.hideOverlay();
+        this.draw(); // Рисуем начальное состояние
         this.gameLoop();
     }
     
@@ -84,17 +89,24 @@ class SnakeGame {
     }
     
     update() {
+        // Если игра не началась (игрок еще не нажимал стрелки), не двигаемся
+        if (!this.gameStarted) {
+            return;
+        }
+        
         const head = { x: this.snake[0].x + this.dx, y: this.snake[0].y + this.dy };
         
         // Проверка столкновения со стенами
         if (head.x < 0 || head.x >= this.tileCount || 
             head.y < 0 || head.y >= this.tileCount) {
+            console.log('Game Over: Collision with wall', head, 'tileCount:', this.tileCount);
             this.gameOver();
             return;
         }
         
         // Проверка столкновения с собой
         if (this.snake.some(segment => segment.x === head.x && segment.y === head.y)) {
+            console.log('Game Over: Collision with self', head);
             this.gameOver();
             return;
         }
@@ -113,6 +125,11 @@ class SnakeGame {
     }
     
     draw() {
+        // Убеждаемся, что цвета инициализированы
+        if (!this.colors) {
+            this.setupTheme();
+        }
+        
         // Очистка канваса
         this.ctx.fillStyle = this.colors.background;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -142,6 +159,11 @@ class SnakeGame {
     }
     
     drawGrid() {
+        // Убеждаемся, что цвета инициализированы
+        if (!this.colors) {
+            this.setupTheme();
+        }
+        
         this.ctx.strokeStyle = this.colors.grid;
         this.ctx.lineWidth = 1;
         
@@ -178,24 +200,40 @@ class SnakeGame {
                 if (this.dy === 0) {
                     this.dx = 0;
                     this.dy = -1;
+                    if (!this.gameStarted) {
+                        console.log('Game started with ArrowUp');
+                        this.gameStarted = true;
+                    }
                 }
                 break;
             case 'ArrowDown':
                 if (this.dy === 0) {
                     this.dx = 0;
                     this.dy = 1;
+                    if (!this.gameStarted) {
+                        console.log('Game started with ArrowDown');
+                        this.gameStarted = true;
+                    }
                 }
                 break;
             case 'ArrowLeft':
                 if (this.dx === 0) {
                     this.dx = -1;
                     this.dy = 0;
+                    if (!this.gameStarted) {
+                        console.log('Game started with ArrowLeft');
+                        this.gameStarted = true;
+                    }
                 }
                 break;
             case 'ArrowRight':
                 if (this.dx === 0) {
                     this.dx = 1;
                     this.dy = 0;
+                    if (!this.gameStarted) {
+                        console.log('Game started with ArrowRight');
+                        this.gameStarted = true;
+                    }
                 }
                 break;
             case ' ':
@@ -207,6 +245,9 @@ class SnakeGame {
     
     togglePause() {
         if (!this.gameRunning) return;
+        
+        // Если игра еще не началась, не позволяем ставить на паузу
+        if (!this.gameStarted) return;
         
         this.paused = !this.paused;
         this.pauseButton.innerHTML = this.paused ? 
@@ -223,6 +264,7 @@ class SnakeGame {
     restartGame() {
         this.gameRunning = false;
         this.paused = false;
+        this.gameStarted = false;
         this.pauseButton.innerHTML = '<i class="fas fa-pause"></i> Пауза';
         this.startGame();
     }
@@ -250,8 +292,8 @@ class SnakeGame {
     showOverlay(type) {
         switch (type) {
             case 'start':
-                this.gameMessage.textContent = 'Нажмите SPACE для старта';
-                this.gameSubmessage.textContent = 'Используйте стрелки для управления';
+                this.gameMessage.textContent = 'Готовы к игре?';
+                this.gameSubmessage.textContent = 'Нажмите любую стрелку для начала движения';
                 this.startButton.textContent = 'Начать игру';
                 break;
             case 'pause':
