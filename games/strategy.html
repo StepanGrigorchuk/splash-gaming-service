@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стратегический Форпост - SPLASH</title>
+    
+    <!-- Фавиконка -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="../assets/icons/favicon-32x32.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/favicon.svg">
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/game.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Дополнительные стили для стратегии -->
+    <style>
+        .strategy-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .strategy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+        }
+        
+        .resources-panel {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .resource {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--background);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+        }
+        
+        .resource-icon {
+            font-size: 1.2rem;
+        }
+        
+        .resource-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .game-board {
+            display: flex;
+            gap: 1rem;
+            height: 70vh;
+        }
+        
+        .main-viewport {
+            flex: 1;
+            position: relative;
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+        
+        .game-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: grab;
+        }
+        
+        .game-canvas:active {
+            cursor: grabbing;
+        }
+        
+        .minimap {
+            width: 200px;
+            height: 200px;
+            background: var(--background);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .minimap-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        
+        .sidebar {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .building-panel, .unit-panel {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+            padding: 1rem;
+        }
+        
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .building-grid, .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .building-btn, .unit-btn {
+            padding: 0.75rem;
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .building-btn:hover, .unit-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .building-btn.disabled, .unit-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .building-btn.disabled:hover, .unit-btn.disabled:hover {
+            background: var(--background);
+            color: var(--text-primary);
+        }
+        
+        .btn-icon {
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .btn-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .btn-cost {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        
+        .turn-info {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .turn-number {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .end-turn-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .end-turn-btn:hover {
+            background: var(--accent-hover);
+        }
+        
+        .end-turn-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .game-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .overlay-content {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            max-width: 400px;
+        }
+        
+        .overlay-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .overlay-message {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .overlay-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .overlay-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .overlay-btn.primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .overlay-btn.secondary {
+            background: var(--background);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        .overlay-btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="../assets/icons/favicon-32x32.svg" alt="SPLASH" class="logo-icon">
+                    <a href="../index.html" class="logo">SPLASH</a>
+                </div>
+                <nav class="nav">
+                    <a href="../index.html" class="nav-link">Главная</a>
+                    <span class="nav-link active">Стратегический Форпост</span>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="strategy-container">
+            <div class="strategy-header">
+                <div class="resources-panel">
+                    <div class="resource">
+                        <i class="fas fa-coins resource-icon" style="color: #f59e0b;"></i>
+                        <span class="resource-value" id="coins">30</span>
+                    </div>
+                    <div class="resource">
+                        <i class="fas fa-cube resource-icon" style="color: #8b5cf6;"></i>
+                        <span class="resource-value" id="bricks">30</span>
+                    </div>
+                </div>
+                <div class="turn-info">
+                    <div class="turn-number" id="turnNumber">Ход 1</div>
+                    <button class="end-turn-btn" id="endTurnBtn">Завершить ход</button>
+                </div>
+            </div>
+            
+            <div class="game-board">
+                <div class="main-viewport">
+                    <canvas id="gameCanvas" class="game-canvas" width="800" height="600"></canvas>
+                    <div class="game-overlay" id="gameOverlay">
+                        <div class="overlay-content">
+                            <div class="overlay-title" id="overlayTitle">Добро пожаловать!</div>
+                            <div class="overlay-message" id="overlayMessage">
+                                Стройте здания, создавайте юнитов и побеждайте врага в пошаговой стратегии.
+                            </div>
+                            <div class="overlay-buttons">
+                                <button class="overlay-btn primary" id="startGameBtn">Начать игру</button>
+                                <button class="overlay-btn secondary" id="tutorialBtn">Обучение</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar">
+                    <div class="minimap">
+                        <canvas id="minimapCanvas" class="minimap-canvas" width="200" height="200"></canvas>
+                    </div>
+                    
+                    <div class="building-panel">
+                        <div class="panel-title">Здания</div>
+                        <div class="building-grid">
+                            <div class="building-btn" data-building="market">
+                                <i class="fas fa-store btn-icon" style="color: #f59e0b;"></i>
+                                <div class="btn-name">Рынок</div>
+                                <div class="btn-cost">20 <i class="fas fa-cube"></i></div>
+                            </div>
+                            <div class="building-btn" data-building="factory">
+                                <i class="fas fa-industry btn-icon" style="color: #8b5cf6;"></i>
+                                <div class="btn-name">Завод</div>
+                                <div class="btn-cost">20 <i class="fas fa-coins"></i></div>
+                            </div>
+                            <div class="building-btn" data-building="barracks">
+                                <i class="fas fa-fort-awesome btn-icon" style="color: #ef4444;"></i>
+                                <div class="btn-name">Казарма</div>
+                                <div class="btn-cost">40 <i class="fas fa-coins"></i> 40 <i class="fas fa-cube"></i></div>
+                            </div>
+                            <div class="building-btn" data-building="wall">
+                                <i class="fas fa-wall-brick btn-icon" style="color: #6b7280;"></i>
+                                <div class="btn-name">Стена</div>
+                                <div class="btn-cost">10 <i class="fas fa-cube"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="unit-panel">
+                        <div class="panel-title">Юниты</div>
+                        <div class="unit-grid">
+                            <div class="unit-btn" data-unit="soldier">
+                                <i class="fas fa-user-shield btn-icon" style="color: #dc2626;"></i>
+                                <div class="btn-name">Солдат</div>
+                                <div class="btn-cost">10 <i class="fas fa-coins"></i> 10 <i class="fas fa-cube"></i></div>
+                            </div>
+                            <div class="unit-btn" data-unit="scout">
+                                <i class="fas fa-running btn-icon" style="color: #059669;"></i>
+                                <div class="btn-name">Разведчик</div>
+                                <div class="btn-cost">5 <i class="fas fa-coins"></i> 5 <i class="fas fa-cube"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/strategy.js"></script>
+</body>
+</html>
