@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPLASH - Игровой сервис</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">SPLASH</h1>
+                <nav class="nav">
+                    <a href="#" class="nav-link active">Главная</a>
+                    <a href="#games" class="nav-link">Игры</a>
+                    <a href="#about" class="nav-link">О нас</a>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 class="hero-title">Добро пожаловать в SPLASH</h2>
+                    <p class="hero-description">
+                        Простые и увлекательные игры прямо в вашем браузере. 
+                        Никаких загрузок, никаких сложностей — только удовольствие от игры.
+                    </p>
+                    <button class="cta-button" onclick="scrollToGames()">
+                        Начать играть
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="popular-games" id="games">
+            <div class="container">
+                <h2 class="section-title">Популярные игры</h2>
+                <div class="games-grid" id="gamesGrid">
+                    <!-- Игры будут добавлены динамически -->
+                </div>
+                <div class="more-games">
+                    <button class="secondary-button" onclick="showAllGames()">
+                        Все игры
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <h2 class="section-title">О проекте</h2>
+                    <p class="about-text">
+                        SPLASH — это веб-сервис с коллекцией простых и увлекательных одиночных игр. 
+                        Мы создаем игры для тех, кто хочет расслабиться и получить удовольствие от процесса, 
+                        не тратя время на сложное обучение или загрузку приложений.
+                    </p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-bolt"></i>
+                            <h3>Быстрый запуск</h3>
+                            <p>Все игры загружаются мгновенно</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-gamepad"></i>
+                            <h3>Простое управление</h3>
+                            <p>Интуитивно понятный интерфейс</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-save"></i>
+                            <h3>Сохранение прогресса</h3>
+                            <p>Ваши достижения не потеряются</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 SPLASH. Все права защищены.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
