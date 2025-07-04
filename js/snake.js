@@ -197,6 +197,7 @@ class SnakeGame {
         
         switch (e.key) {
             case 'ArrowUp':
+                e.preventDefault(); // Блокируем навигацию по странице
                 if (this.dy === 0) {
                     this.dx = 0;
                     this.dy = -1;
@@ -207,6 +208,7 @@ class SnakeGame {
                 }
                 break;
             case 'ArrowDown':
+                e.preventDefault(); // Блокируем навигацию по странице
                 if (this.dy === 0) {
                     this.dx = 0;
                     this.dy = 1;
@@ -217,6 +219,7 @@ class SnakeGame {
                 }
                 break;
             case 'ArrowLeft':
+                e.preventDefault(); // Блокируем навигацию по странице
                 if (this.dx === 0) {
                     this.dx = -1;
                     this.dy = 0;
@@ -227,6 +230,7 @@ class SnakeGame {
                 }
                 break;
             case 'ArrowRight':
+                e.preventDefault(); // Блокируем навигацию по странице
                 if (this.dx === 0) {
                     this.dx = 1;
                     this.dy = 0;

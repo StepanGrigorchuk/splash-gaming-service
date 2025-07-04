@@ -376,15 +376,19 @@ class TetrisGame {
         
         switch (e.key) {
             case 'ArrowLeft':
+                e.preventDefault(); // Блокируем навигацию по странице
                 this.movePiece(-1, 0);
                 break;
             case 'ArrowRight':
+                e.preventDefault(); // Блокируем навигацию по странице
                 this.movePiece(1, 0);
                 break;
             case 'ArrowDown':
+                e.preventDefault(); // Блокируем навигацию по странице
                 this.movePiece(0, 1);
                 break;
             case 'ArrowUp':
+                e.preventDefault(); // Блокируем навигацию по странице
                 this.rotatePiece();
                 break;
             case ' ':
